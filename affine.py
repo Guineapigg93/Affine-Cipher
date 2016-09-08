@@ -1,3 +1,6 @@
+#Aaron Guillen
+#This program is used to brute force a solution to an Affine Cipher
+
 from string import ascii_uppercase
 import sys
 
