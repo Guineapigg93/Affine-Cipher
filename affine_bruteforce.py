@@ -1,4 +1,5 @@
 #Aaron Guillen
+#8 September 2016
 
 from string import ascii_uppercase
 import sys
@@ -69,16 +70,11 @@ for i in fin:
 #Make sure we have all uppercase letters ..
 ctext = ctext.upper()
 
-print(ctext)
-
 #DON'T YOU DARE FORGET TO CLOSE THAT FILE YOU ROTTEN SCOUNDREL
 fin.close()
 
 #Get our (uppercase) English aplhabet mapped to numbers 0 - 25
 alph = instDict()
-
-#We also need to get the same thing reverses (that is, for 'A': 0, we need 0: 'A')
-
 
 #Remember our cipher, CipherCharacter = (ax + b) % 26 where x is a plaintext character
 #and a and b are our key values

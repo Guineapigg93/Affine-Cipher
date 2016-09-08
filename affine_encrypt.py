@@ -1,3 +1,6 @@
+#Aaron Guillen
+#9 September 2016
+
 from string import ascii_uppercase
 from random import randint
 import sys
