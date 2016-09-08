@@ -1,5 +1,4 @@
 #Aaron Guillen
-#This program is used to brute force a solution to an Affine Cipher
 
 from string import ascii_uppercase
 import sys
@@ -40,20 +39,26 @@ def usage():
     sys.exit(0)
 
 #First thing's first, gotta get our ciphertext. Command line input
-if len(sys.argv) == 1:
-    sys.stdout.write("It seems you have not provided me with a ciphertext file.\n\n")
-    usage()
+def checkInput():
+    if len(sys.argv) == 1:
+        sys.stdout.write("It seems you have not provided me with a ciphertext file.\n\n")
+        usage()
 
-if len(sys.argv) > 2:
-    sys.stdout.write("You've provided me with too much input!\n\n")
-    usage()
+    if len(sys.argv) > 2:
+        sys.stdout.write("You've provided me with too much input!\n\n")
+        usage()
 
 #Get our File I/O out of the way ...
-try:
-    fin = open(sys.argv[1])
-except IOError:
-    print("It seems that " + sys.argv[1] + " does not exist.")
-    sys.exit(0)
+def openFile():
+    try:
+        fin = open(sys.argv[1])
+    except IOError:
+        print("It seems that " + sys.argv[1] + " does not exist.")
+        sys.exit(0)
+    return fin
+
+checkInput()
+fin = openFile()
 
 #Empty string for cipher text ..
 ctext = ""
