@@ -21,7 +21,8 @@ def instDict(): #easy way to get our dict
 
 #Gotta have a usage
 def usage():
-    sys.stdout.write("usage: python affine.py [plaintext text file]")
+    sys.stdout.write("usage: python affine.py [plaintext text file] [a] [b]")
+    sys.stdout.write("\n\ta and b are optional. If not provided, they will be generated randomly\n")
     sys.exit(0)
 
 #First thing's first, gotta get our plaintext. Command line input
@@ -30,8 +31,11 @@ def checkInput():
         sys.stdout.write("It seems you have not provided me with a plaintext file.\n\n")
         usage()
 
-    if len(sys.argv) > 2:
-        sys.stdout.write("You've provided me with too much input!\n\n")
+    elif len(sys.argv) == 4:
+        sys.stdout.write("You've provided key (" + sys.argv[2] + ", " + sys.argv[3] +")\n")
+
+    elif len(sys.argv) > 2:
+        sys.stdout.write("You've provided me with improper input!\n\n")
         usage()
 
 #Get our File I/O out of the way ...
@@ -63,12 +67,11 @@ alph = instDict()
 
 #Remember our cipher, CipherCharacter = (ax + b) % 26 where x is a plaintext character
 #and a and b are our key values
-#We are going to brute force all possible keys a and b
 #Now, a SHOULD be chosen such that a and m are coprime
 #Coprime, meaning that the only common positive factor of the two numbers is 1
 #Bear in mind that with English, m is 26
 #Since 26 = 2 * 13, a should not be a number divisible by 2 or 13.
-#Thus, a is likely 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, or 25
+#Thus, a must exist in the set 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, or 25
 
 #Our legal values for a
 #a = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
@@ -95,7 +98,7 @@ def findLegalA(m):
             ret.append(i)
     return ret
 
-#Randomly choose a and b
+#Randomly choose a and b    
 def randA(modulus):
     t = 0
     while t not in findLegalA(modulus):
@@ -108,9 +111,39 @@ def randB(modulus):
 #Our modulus, m, which, again, is 26
 m = 26
 
-#Get a and b
-a = randA(m)
-b = randB(m)
+#Get a and b, depending
+#If provided via command line, we will need to check this input
+if len(sys.argv) == 4:
+    #Make sure it's numbers, first of all
+    try:
+        a = int(sys.argv[2])
+    except ValueError:
+        sys.stdout.write("You've provided me with improper input!\n")
+        sys.stdout.write("Input: " + sys.argv[2] + "\n\n")
+        usage()
+    try:
+        b = int(sys.argv[3])
+    except ValueError:
+        sys.stdout.write("You've provided me with improper input!\n")
+        sys.stdout.write("Input: " + sys.argv[3] + "\n\n")
+        usage()
+    #And once we know we have numbers, ensure that they're in range
+    #b can simply be modded by 26
+    #set a temporary variable to make sure we inform them if we change b
+    temp = b
+    b = b % 26
+    if temp != b:
+        sys.stdout.write("Your input "+ str(temp) + " was modded by 26 and has become " + str(b) + ".\n")
+        sys.stdout.write("This is for simplification purposes and will have no effect on the outcome of encryption.\n\n")
+    if a not in findLegalA(m):
+        sys.stdout.write("Provided a value is not in legal set of values:\n")
+        sys.stdout.write(str(findLegalA(m)) + "\n\n")
+        usage()
+        
+#Otherwiiiise, randomly generate them.
+else:
+    a = randA(m)
+    b = randB(m)
 
 #Our encryption algorithm
 def encAffine(plainText, a, b, modulus):
