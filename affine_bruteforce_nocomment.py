@@ -72,7 +72,10 @@ def decAffine(ciphText, aValues, modulus):
                     d = mmi * (x - b) % m
                     sys.stdout.write(str(alph[d]))
                 else:
-                    sys.stdout.write(x)
+                    try:
+                        sys.stdout.write(x)
+                    except UnicodeEncodeError:
+                        sys.stdout.write("")
             sys.stdout.write("\n\n")
             c += 1
 
