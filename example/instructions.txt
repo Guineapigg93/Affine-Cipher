@@ -1,0 +1,23 @@
+So, just an example of how to use this.
+
+Open a command line and navigate to the directory you have the brute force script saved in.
+
+Once in the directory, I type
+
+
+python affine_bruteforce.py example\sample_input.txt
+
+
+Note that my input file "example\sample_input.txt" because my sample input is a file called sample_input.txt that lies in a subdirectory called "example" from where I am working.
+
+Now, this will provide a fair amount of output as the program will run 286 possible decryptions of your cipher. A better option may be the provide a file for the output as such:
+
+
+python affine_bruteforce.py example\sample_input.txt > decodings.txt
+
+
+In the above line, instead of displaying all my output on the command line, I have placed my output in a file called "decodings.txt"
+
+I can then open this file and peruse the output. Now, you may be realizing at this point that you have to look through 286 different possible decryptions until you find one that makes sense. This is true. I meant to write an algorithm that would attempt to identify English text, but that's a project for another time. For now, just Ctrl+F (or whatever search/find function your operating system provides) through the file for common words like "the," "and," "or," "but," etc. until you stumble open the actual encryption.
+
+Enjoy(:
